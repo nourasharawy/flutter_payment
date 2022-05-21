@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:flutterpayment/shared/style/colors.dart';
+
+void navigateTo(context, widget) => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => widget),
+    );
+
+void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => widget),
+      (Route<dynamic> route) => false,
+    );
+
+Widget defaultButton({
+  double width = double.infinity,
+  Color backgound = defColor,
+  bool isUpperCase = true,
+  double raduis = 0.0,
+  double height = 40.0,
+  required String text,
+  required Function() function,
+}) =>
+    Container(
+      width: width,
+      height: height,
+      child: MaterialButton(
+        child: Text(
+          isUpperCase ? text.toUpperCase() : text,
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: function,
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(raduis), color: backgound),
+    );
+
+Widget defauldTextFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  ValueChanged<String>? onSubmit,
+  ValueChanged<String>? onChange,
+  GestureTapCallback? onTap,
+  bool isPassword = false,
+  required FormFieldValidator<String>? validator,
+  required String label,
+  required IconData prefix,
+  IconData? suffix,
+  VoidCallback? suffixPressed,
+  bool isClickable = true,
+  int? lines,
+}) =>
+    Container(
+      child: TextFormField(
+        controller: controller,
+        keyboardType: type,
+        obscureText: isPassword,
+        enabled: isClickable,
+        onFieldSubmitted: onSubmit,
+        onChanged: onChange,
+        onTap: onTap,
+        maxLines: lines,
+        validator: validator,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(prefix),
+          suffixIcon: suffix != null
+              ? IconButton(
+                  onPressed: suffixPressed,
+                  icon: Icon(
+                    suffix,
+                  ))
+              : null,
+          border: const OutlineInputBorder(),
+        ),
+      ),
+    );
+
+Widget defaultSizedBox()=> SizedBox(height: 30,);
